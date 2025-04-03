@@ -106,16 +106,8 @@ def main():
                 st.session_state.authenticated = True
                 st.session_state.user_role = role
                 st.session_state.username = username
-<<<<<<< HEAD
-                try:
-                    st.experimental_rerun()
-                except Exception as e:
-                    st.error("An error occurred while rerunning the app. Please try again.")
-                    st.error(str(e))
-=======
                 st.success(f"Logged in successfully as {username}!")
-                st.rerun()
->>>>>>> 05b2f7e (Initial commit or updated project files)
+                st.experimental_rerun()
             else:
                 st.error("Invalid credentials")
         return
@@ -204,7 +196,7 @@ def main():
             # Reset button outside the form
             if st.session_state.add_form_submitted and st.button("Reset Add Form"):
                 st.session_state.add_form_submitted = False
-                st.rerun()
+                st.experimental_rerun()
 
         # Update Operation
         with tabs[1]:
@@ -229,45 +221,6 @@ def main():
                             st.write(f"**ID Number:** {current_data['ID_Number']}")
                             email_address = st.text_input("Email Address", value=current_data['Email_Address'], disabled=(st.session_state.user_role != "Master"))
                         with col2:
-<<<<<<< HEAD
-                            if st.session_state.user_role == "Master":
-                                mobile1 = st.text_input("Mobile Phone 1", value=current_data['Mobile Phone1'])
-                                mobile2 = st.text_input("Mobile Phone 2", value=current_data['Mobile Phone2'])
-                                company_phone = st.text_input("Company Phone", value=current_data['Company Phone'])
-                                company = st.text_input("Company", value=current_data['Company'])
-                            else:
-                                st.write(f"**Mobile Phone 1:** {current_data['Mobile Phone1']}")
-                                st.write(f"**Mobile Phone 2:** {current_data['Mobile Phone2']}")
-                                st.write(f"**Company Phone:** {current_data['Company Phone']}")
-                                st.write(f"**Company:** {current_data['Company']}")
-                        
-                        if st.session_state.user_role == "Master":
-                            company_address = st.text_area("Company Address", value=current_data['Company Address'])
-                        else:
-                            st.write(f"**Company Address:** {current_data['Company Address']}")
-
-                        # Fields editable by both Master and Normal users
-                        status = st.selectbox("Status", ["Not Contacted", "Contacted", "Interested", 
-                                                        "Not Interested", "Follow Up Needed"],
-                                             index=["Not Contacted", "Contacted", "Interested", 
-                                                    "Not Interested", "Follow Up Needed"].index(current_data['Status']))
-                        follow_up_date = st.date_input("Follow-up Date", 
-                                                       value=pd.to_datetime(current_data['Follow_up_Date']).date() if pd.notna(current_data['Follow_up_Date']) else datetime.date.today())
-                        notes = st.text_area("Notes", value=current_data['Notes'])
-                        made_call = st.checkbox("Log call attempt")
-                        
-                        # Lead assignment (only for Master users)
-                        if st.session_state.user_role == "Master":
-                            if users_df.empty:
-                                st.error("No users available to assign leads. Please add users first.")
-                                assigned_user = current_data['Assigned_User']
-                            else:
-                                assigned_user = st.selectbox("Assign to User", users_df['Username'].tolist(),
-                                                             index=users_df['Username'].tolist().index(current_data['Assigned_User']) if current_data['Assigned_User'] in users_df['Username'].tolist() else 0)
-                        else:
-                            assigned_user = st.session_state.username
-                            st.write(f"**Assigned User:** {current_data['Assigned_User']}")
-=======
                             country_of_interest = st.text_input("Country of Interest", value=current_data['Country_of_Interest'], disabled=(st.session_state.user_role != "Master"))
                             type_of_visa = st.selectbox("Type of Visa", ["Student", "Visit", "PR", "Jobseeker", "Business"],
                                                         index=["Student", "Visit", "PR", "Jobseeker", "Business"].index(current_data['Type_of_Visa']),
@@ -277,7 +230,6 @@ def main():
                                                    index=["Yes", "No"].index(current_data['Diploma']),
                                                    disabled=(st.session_state.user_role != "Master"))
                             work_experience = st.text_input("Work Experience", value=current_data['Work_Experience'], disabled=(st.session_state.user_role != "Master"))
->>>>>>> 05b2f7e (Initial commit or updated project files)
 
                         current_job = st.text_input("Current Job", value=current_data['Current_Job'], disabled=(st.session_state.user_role != "Master"))
                         travel_history = st.text_area("Travel History", value=current_data['Travel_History'], disabled=(st.session_state.user_role != "Master"))
@@ -316,7 +268,7 @@ def main():
                     # Reset button outside the form
                     if st.session_state.update_form_submitted and st.button("Reset Update Form"):
                         st.session_state.update_form_submitted = False
-                        st.rerun()
+                        st.experimental_rerun()
 
         # Delete Operation (Only for Master)
         if st.session_state.user_role == "Master" and len(tabs) > 2:
@@ -338,7 +290,7 @@ def main():
                     # Reset button outside the form
                     if st.session_state.delete_form_submitted and st.button("Reset Delete Form"):
                         st.session_state.delete_form_submitted = False
-                        st.rerun()
+                        st.experimental_rerun()
 
     # User Management (for Master users)
     elif choice == "User Management" and st.session_state.user_role == "Master":
@@ -362,7 +314,7 @@ def main():
         # Reset button outside the form
         if st.session_state.user_form_submitted and st.button("Reset User Add Form"):
             st.session_state.user_form_submitted = False
-            st.rerun()
+            st.experimental_rerun()
 
         st.write("Current Users:")
         if not users_df.empty:
@@ -384,10 +336,10 @@ def main():
             # Reset button outside the loop for user deletion
             if st.session_state.user_form_submitted and st.button("Reset User Delete Form"):
                 st.session_state.user_form_submitted = False
-                st.rerun()
+                st.experimental_rerun()
         else:
             st.write("No users found.")
-
+            
 if __name__ == "__main__":
     if not os.path.exists(APPLICANTS_FILE):
         initial_applicants = pd.DataFrame([
