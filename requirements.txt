@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+pandas
+openpyxl
+xlrd
+=======
+
+>>>>>>> 05b2f7e (Initial commit or updated project files)
